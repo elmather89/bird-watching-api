@@ -61,7 +61,9 @@ $(document).ready(function () {
                         .then(response => response.json())
                         .then(result => {
                             // console.log(result.photos.photo[0]);
-                            let birdPhoto = result.photos.photo[0];
+                            
+                            // let birdPhoto = result.photos.photo[0];
+                            let birdPhoto = result.photos.photo[Math.floor(Math.random() * result.photos.photo.length)];
                             // console.log(birdPhoto.farm);
                             // console.log(birdPhoto);
 
