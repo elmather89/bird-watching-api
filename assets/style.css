@@ -32,7 +32,7 @@ h1 {
     font-size: 3.5rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: rgb(25, 29, 25);
+    color: rgba(25, 29, 25, 0.781);
     position: relative;
     z-index: 100;
 }
