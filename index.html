@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,29 +9,35 @@
 
     <!-- style -->
     <link rel="stylesheet" href="../bird-watching-api/assets/reset.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="../bird-watching-api/assets/style.css">
     <link href="https://fonts.googleapis.com/css?family=Special+Elite&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/simple-parallax-js@5.2.0/dist/simpleParallax.min.js"></script>
 
 </head>
+
 <body>
+
+    <div class="jumbotron jumbotron-fluid text-center">
+        <h1>Bird Sightings Near You</h1>
+        <div class="overlay"></div>
+    </div>
+    
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="jumbotron text-center">
-                    <h1>BIRDS</h1>
-                </div>
+                <div class="row justify-content-center loader-here" id="birds-here"></div>
             </div>
-            <div class="col-md-12" id="birds-here"></div>
         </div>
     </div>
-    
-  <!-- JS -->
-  <script src="https://code.jquery.com/jquery.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-  <!-- <script src="app.js"></script> -->
-  <script src="app2.js"></script>
-    
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+    <script src="app5.js"></script>
+
 </body>
+
 </html>

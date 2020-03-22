@@ -7,7 +7,7 @@ $(document).ready(function () {
 
         var geoLat = position.coords.latitude;
         var geoLon = position.coords.longitude;
-        const birdImageUrlArr = [];
+        const reqBirdArr = [];
         // var reqBird = ['Northern Cardinal'];
         // var imgSrcUrl = 'https://farm66.staticflickr.com/65535/49659533952_60d03a8874.jpg';
 
@@ -20,8 +20,8 @@ $(document).ready(function () {
             }
         });
 
-        function ajaxCall(sweetBird) {
-            console.log(sweetBird);
+        function domManipulation(sweetBird) {
+            // console.log(sweetBird);
             sweetBird['imgSrc'] = 'https://farm66.staticflickr.com/65535/49659533952_60d03a8874.jpg';
 
             /**
@@ -48,57 +48,14 @@ $(document).ready(function () {
         };
 
         /**
-             * ajax call to get imgs for all birdImgQuery urls
-             */
-        function parseUrlArr(url) {
-            // console.log(url);
-
-            url.map(src => {
-                // console.log(src);
-                ajaxCall(src);
-            });
-        };
-
-        /**
-         * flickr api call
-         */
-        const getImagesFunc = (bird) => {
-            const birdArr = [bird];
-            // const birdImageUrlArr = [];
-            // console.log(birdImageUrlArr);
-
-
-            sweeterBirdArray(birdArr);
-            function sweeterBirdArray(birdArr) {
-                // console.log(birdArr);
-                birdArr.map(sweetBird => {
-                    // console.log(sweetBird);
-                    const sweetBirdName = sweetBird.comName;
-                    const trimName = sweetBirdName.trim();
-                    const replaceSpace = trimName.replace(' ', '+');
-                    /**
-                     * Example of working url: https://farm66.staticflickr.com/65535/49659533952_60d03a8874.jpg
-                     */
-                    var birdImgQuery = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=ade9a6668e30d057f1126bc24e620115&tags=' + `${replaceSpace}` + '&format=json';
-
-                    sweetBird['imgSrc'] = birdImgQuery;
-                    console.log(sweetBird);
-
-                    ajaxCall(sweetBird);
-                });
-            };
-        };
-        // getImagesFunc();
-
-        /**
          * ebird api call
          */
-        nearbyHotSpotsFunc(geoLat, geoLon, birdImageUrlArr);
-        function nearbyHotSpotsFunc(geoLat, geoLon) {
+        nearbyHotSpotsFunc(geoLat, geoLon, reqBirdArr);
+        function nearbyHotSpotsFunc(geoLat, geoLon, requestedBird) {
             // console.log(reqBird);
             var lat = `${geoLat}`;
             var lon = `${geoLon}`;
-            var reqBird = birdImageUrlArr;
+            // var reqBird = birdImageUrlArr;
             // var imgSrcUrl = `${imgSrcUrl}`;
 
             // Nearby hotspost query
@@ -107,14 +64,64 @@ $(document).ready(function () {
 
             $.ajax({
                 url: hotspotQuery,
-                method: "GET"
-            }).then(function (data) {
-                // console.log(data);
+                method: "GET",
+                success: function (data) {
+                    // console.log(data);
 
-                data.forEach(bird => {
-                    getImagesFunc(bird);
-                });
+                    data.forEach(bird => {
+                        /**
+                         * flickr api call
+                         */
+                        const getImagesFunc = (bird) => {
+                            const birdArr = [bird];
+                            // const birdImageUrlArr = [];
+                            // console.log(birdImageUrlArr);
 
+                            birdArr.map(sweetBird => {
+                                // console.log(sweetBird);
+
+                                const sweetBirdName = sweetBird.comName;
+                                const trimName = sweetBirdName.trim();
+                                const replaceSpace = trimName.replace(' ', '+');
+                                const obsLocID = sweetBird.locId;
+                                const obsLocName = sweetBird.locName;
+                                /**
+                                 * Example of working url: https://farm66.staticflickr.com/65535/49659533952_60d03a8874.jpg
+                                 */
+                                var birdImgQuery = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=ade9a6668e30d057f1126bc24e620115&tags=' + `${replaceSpace}` + '&format=json';
+
+                                reqBirdArr.push({
+                                    'name': replaceSpace,
+                                    'imgSrc': birdImgQuery,
+                                    'locationID': obsLocID,
+                                    'locationName': obsLocName,
+                                });
+                                // domManipulation(sweetBird);
+                            });
+                        };
+                        // getImagesFunc(bird);
+                    });
+
+                    mapOverNew(data);
+                    function mapOverNew(data) {
+                        console.log('hello');
+
+                        data.map(item => {
+                            console.log(item);
+                            const newUrl = item.imgSrc;
+                            
+                            $.ajax({
+                                url: newUrl,
+                                method: "GET",
+                                success: function(data) {
+                                    console.log(data);
+                                },
+                            });
+
+                        });
+
+                    };
+                },
             });
 
         };
