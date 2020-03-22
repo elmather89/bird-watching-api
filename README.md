@@ -1,3 +1,3 @@
 # bird-watching-api
 
-* https://simpleparallax.com/#settings
+Published site [here](https://elmather89.github.io/bird-watching-api/)
