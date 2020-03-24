@@ -41,7 +41,7 @@ $(document).ready(function () {
                 // console.log(data);
 
                 data.forEach(bird => {
-                    let birdImgQuery = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=ade9a6668e30d057f1126bc24e620115&tags=' + `${bird.comName}` + '&format=json&nojsoncallback=1';
+                    let birdImgQuery = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=ade9a6668e30d057f1126bc24e620115&tags=' + `${bird.comName}` + '&safe_search=1&privacy_filter=1&format=json&nojsoncallback=1';
                     // Store the post data to a variable
                     allBirds.push({
                         'name': bird.comName,
@@ -57,13 +57,23 @@ $(document).ready(function () {
                     // console.log(allBirds[property].flickrQuery);
                     let query = `${allBirds[property].flickrQuery}`;
 
+                    if (query == 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=ade9a6668e30d057f1126bc24e620115&tags=Redhead&safe_search=1&privacy_filter=1&format=json&nojsoncallback=1') {
+                        console.log(query);
+                        query = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=ade9a6668e30d057f1126bc24e620115&tags=Redhead+Duck,red-headed+duck,red+duck&safe_search=1&privacy_filter=1&format=json&nojsoncallback=1';
+                    }
+
+                    if (query == 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=ade9a6668e30d057f1126bc24e620115&tags=Merlin&safe_search=1&privacy_filter=1&format=json&nojsoncallback=1') {
+                        query = 'https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=ade9a6668e30d057f1126bc24e620115&tags=Merlin+Bird&safe_search=1&privacy_filter=1&format=json&nojsoncallback=1'
+                    }
+
                     fetch("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=f0b22c0a4fdf472d7c1175a6438910e4&tags=" + query + "&format=json&nojsoncallback=1", requestOptions)
                         .then(response => response.json())
                         .then(result => {
                             // console.log(result.photos.photo[0]);
                             
                             // let birdPhoto = result.photos.photo[0];
-                            let birdPhoto = result.photos.photo[Math.floor(Math.random() * result.photos.photo.length)];
+                            // let birdPhoto = result.photos.photo[Math.floor(Math.random() * result.photos.photo.length)];
+                            let birdPhoto = result.photos.photo[Math.floor(Math.random() * 5)];
                             // console.log(birdPhoto.farm);
                             // console.log(birdPhoto);
 
